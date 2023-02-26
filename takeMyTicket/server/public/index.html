@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>
+		takeMyTicket
+	</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">
+    
+</head>
+<body>
+	<a name="home"></a>
+	<section class="section header">
+		<div class="container">
+			<div class="title">
+				takeMyTicket 
+			</div>
+			<div>
+				<img class = "logo"src="./pictures/logo.jpg">
+			</div>
+		</div>
+		<div class="rotate">
+			<img class="header-img" src="./pictures/concert.jpeg">
+		</div>
+	</section>
+	<section class="section banner">
+		<div class="container">
+			<div class="card">
+				Good To see you back here!
+			</div>
+		</div>
+	</section>
+	<section class="navbar">
+		<ul>
+                <li><a class="link" href = "#"><button>Join the club</button></a></li>
+                <li><a class="link" href = "#news"><button id="postBtn">News</button id="postBtn"></a></li>
+                <li><a class="link" ><button id="getBtn">Events</button></a></li>
+                <li><a class="link" href = "#aboutus">About Us</a></li>
+        </ul>
+	</section>
+	<a name="news"></a>
+	<section class="section details">
+		<div class="card">
+			<p>People Of Honour</p>
+			<div class="dropdown">
+				<a class = "drop" href="#">President</a>
+  				<a class = "drop" href="#">Vice President</a>
+  				<a class = "drop" href="#">General Secretary</a>
+  				<a class = "drop" href="#">Treasurer</a>
+  				<a class = "drop" href="#">Executive Member</a>
+			</div>
+		</div>
+
+		<div class="card">
+			<p>Trending Events</p>	
+			<div class="dropdown">
+				<a class = "drop" href="#">Anirudh&I</a>
+  				<a class = "drop" href="#">Yuvan&I</a>
+  				<a class = "drop" href="#">Sundown</a>
+  				<a class = "drop" href="#">Party Goa</a>
+			</div>		
+		</div>
+	</section>
+
+	<section class=" news section">
+		<div class="works">
+		<h4>Upcoming Events</h4>
+		<div class="container">
+			<img class ="imgs" src=".\pictures\music.jpeg">
+			<img class ="imgs" src=".\pictures\dance.png">
+			<img class ="imgs" src=".\pictures\party.jpg">
+		</div>
+		</div>
+	</section>
+	<section class="section archive">
+		<h4>Events_Calender</h4>
+		<ul>
+			<li>Festivals</li>
+			<li>Culturals</li>
+			<li>Concerts</li>
+			<li>DJ Nights</li>
+		</ul>		
+	</section>
+	<a name="aboutus"></a>
+	<footer class="footer">
+                <div class="footer-col">
+                    <h4>Follow Us</h4>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                    <address>Developers Dungeons</address>
+                </div>
+    </footer>
+<script type="text/javascript">
+	let demo;
+	document.addEventListener('DOMContentLoaded', () => {
+		demo=document.getElementById('demo');
+		document.getElementById('getBtn').addEventListener('click',getInfo);
+		document.getElementById('postBtn').addEventListener('click',getInfo);
+    });
+	const baseUrl = 'http://localhost:3030/tickets'
+
+	async function getInfo(e){
+		e.preventDefault()
+        fetch(baseUrl)
+            .then(res => res.json())
+            .then(content=>{
+            	console.log(content)
+            	console.log(content.task)
+        	
+                let table = document.createElement('table');
+				let header = ['Ticket_Id', 'Event', 'Artist', 'City', 'EventDate', 'CreationDate', 'Status'];
+				let tr=document.createElement('tr');
+				for(let column in header){   
+  					let th=document.createElement('th');
+  					th.innerHTML = header[column];
+  					tr.appendChild(th)
+				}
+				table.appendChild(tr);
+				for(let row in content.task){
+   					tr=document.createElement('tr');
+    				for( column in content.task[row]){
+      			        let td=document.createElement('td');
+        				td.innerHTML = content.task[row][column];
+        				tr.appendChild(td)
+     				}
+    				table.appendChild(tr);
+				}
+				document.body.appendChild(table);
+            })
+	        .catch(err => console.log(err));
+}
+</script>
+
+</body>
+</html>
